@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Super Nove Studio - Professional DJ Controller</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons@latest/icons-sprite.svg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body data-theme="dark">
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <div class="logo-vinyl">
+                    <div class="vinyl-disc spinning">
+                        <div class="vinyl-center"></div>
+                    </div>
+                </div>
+                <h1>Super Nove Studio</h1>
+            </div>
+            <div class="loading-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p class="loading-text">Initializing Audio Engine...</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dj-controller">
+        <header class="controller-header">
+            <div class="brand-section">
+                <div class="brand-logo">
+                    <span class="logo-text">Super Nove Studio</span>
+                </div>
+                <div class="header-stats">
+                    <div class="stat-item">
+                        <span class="stat-value" id="sessionTime">00:00</span>
+                        <span class="stat-label">Session</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-value" id="cpu">0%</span>
+                        <span class="stat-label">CPU</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div class="control-group">
+                    <button class="header-btn" id="aiAssistant">
+                        <i class="ti ti-robot"></i>
+                        <span>AI Assistant</span>
+                    </button>
+                    <button class="header-btn" id="recordSession">
+                        <i class="ti ti-record-mail"></i>
+                        <span data-translate="recordSession">Record</span>
+                    </button>
+                </div>
+                
+                <div class="control-group">
+                    <select class="header-select" id="languageSelector">
+                        <option value="en">English</option>
+                        <option value="ja">日本語</option>
+                        <option value="zh-tw">繁體中文</option>
+                    </select>
+                    <button class="header-btn theme-toggle" id="themeToggle">
+                        <i class="ti ti-moon"></i>
+                        <span data-translate="darkMode">Dark Mode</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="dj-interface">
+            <section class="dj-deck deck-a">
+                <div class="deck-header">
+                    <div class="deck-identity">
+                        <h2 class="deck-label">DECK A</h2>
+                        <div class="deck-indicator"></div>
+                    </div>
+                    <div class="track-info">
+                        <div class="track-title" id="trackTitleA">No Track Loaded</div>
+                        <div class="track-artist" id="trackArtistA">—</div>
+                    </div>
+                    <button class="load-btn" id="loadA">
+                        <i class="ti ti-folder-plus"></i>
+                        <span>LOAD</span>
+                    </button>
+                </div>
+
+                <div class="waveform-container">
+                    <canvas class="waveform-canvas" id="waveformA" width="400" height="80"></canvas>
+                    <div class="waveform-overlay">
+                        <div class="playhead" id="playheadA"></div>
+                        <div class="cue-markers" id="cueMarkersA"></div>
+                    </div>
+                </div>
+
+                <div class="jog-wheel-container">
+                    <div class="jog-wheel" id="jogWheelA">
+                        <div class="jog-wheel-outer">
+                            <div class="jog-wheel-inner">
+                                <div class="jog-wheel-center">
+                                    <div class="bpm-display">
+                                        <span class="bpm-value" id="bpmA">120.0</span>
+                                        <span class="bpm-label">BPM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jog-wheel-led-ring" id="jogLedsA"></div>
+                    </div>
+                </div>
+
+                <div class="transport-controls">
+                    <button class="transport-btn cue-btn" id="cueA">
+                        <i class="ti ti-point-filled"></i>
+                        <span>CUE</span>
+                    </button>
+                    <button class="transport-btn play-btn" id="playA">
+                        <i class="ti ti-player-play"></i>
+                        <span>PLAY</span>
+                    </button>
+                    <button class="transport-btn sync-btn" id="syncA">
+                        <i class="ti ti-refresh"></i>
+                        <span>SYNC</span>
+                    </button>
+                </div>
+
+                <div class="hot-cue-section">
+                    <h3 class="section-title">Hot Cues</h3>
+                    <div class="hot-cue-grid" id="hotCuesA">
+                        <div class="hot-cue-pad" data-cue="1">
+                            <div class="pad-number">1</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="2">
+                            <div class="pad-number">2</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="3">
+                            <div class="pad-number">3</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="4">
+                            <div class="pad-number">4</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="5">
+                            <div class="pad-number">5</div>
+                            <div class="pad-label">LOOP</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="6">
+                            <div class="pad-number">6</div>
+                            <div class="pad-label">LOOP</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="7">
+                            <div class="pad-number">7</div>
+                            <div class="pad-label">FX</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="8">
+                            <div class="pad-number">8</div>
+                            <div class="pad-label">FX</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eq-effects-section">
+                    <div class="eq-controls">
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="high" data-deck="A">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">HIGH</div>
+                        </div>
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="mid" data-deck="A">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">MID</div>
+                        </div>
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="low" data-deck="A">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">LOW</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob filter-knob" data-deck="A">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">FILTER</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fader-section">
+                    <div class="tempo-fader-container">
+                        <div class="fader-track">
+                            <div class="fader-handle tempo-fader" id="tempoFaderA" data-deck="A">
+                                <div class="fader-grip"></div>
+                            </div>
+                        </div>
+                        <div class="fader-label">TEMPO</div>
+                        <div class="tempo-value" id="tempoValueA">0%</div>
+                    </div>
+                    
+                    <div class="volume-fader-container">
+                        <div class="fader-track">
+                            <div class="fader-handle volume-fader" id="volumeFaderA" data-deck="A">
+                                <div class="fader-grip"></div>
+                            </div>
+                        </div>
+                        <div class="fader-label">VOLUME</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="center-mixer">
+                <div class="master-section">
+                    <h3 class="section-title">Master</h3>
+                    <div class="master-knob-container">
+                        <div class="knob-wrapper">
+                            <div class="knob master-knob" id="masterVolume">
+                                <div class="knob-indicator"></div>
+                            </div>
+                            <div class="knob-value">75</div>
+                        </div>
+                        <div class="knob-label">VOLUME</div>
+                    </div>
+                    
+                    <div class="vu-meters">
+                        <div class="vu-meter">
+                            <div class="vu-bar" id="vuLeft"></div>
+                            <div class="vu-label">L</div>
+                        </div>
+                        <div class="vu-meter">
+                            <div class="vu-bar" id="vuRight"></div>
+                            <div class="vu-label">R</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="crossfader-section">
+                    <h3 class="section-title">Crossfader</h3>
+                    <div class="crossfader-container">
+                        <div class="crossfader-track">
+                            <div class="crossfader-handle" id="crossfader">
+                                <div class="crossfader-grip"></div>
+                            </div>
+                        </div>
+                        <div class="crossfader-labels">
+                            <span class="cf-label cf-a">A</span>
+                            <span class="cf-label cf-b">B</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="global-effects-section">
+                    <h3 class="section-title">Global Effects</h3>
+                    <div class="effect-slots">
+                        <div class="effect-slot">
+                            <select class="effect-selector" id="effect1">
+                                <option value="">OFF</option>
+                                <option value="reverb">Reverb</option>
+                                <option value="delay">Delay</option>
+                                <option value="filter">Filter</option>
+                                <option value="flanger">Flanger</option>
+                                <option value="bitcrusher">Bitcrusher</option>
+                            </select>
+                            <div class="knob-wrapper">
+                                <div class="knob effect-knob" data-effect="1">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                        </div>
+                        <div class="effect-slot">
+                            <select class="effect-selector" id="effect2">
+                                <option value="">OFF</option>
+                                <option value="reverb">Reverb</option>
+                                <option value="delay">Delay</option>
+                                <option value="filter">Filter</option>
+                                <option value="flanger">Flanger</option>
+                                <option value="bitcrusher">Bitcrusher</option>
+                            </select>
+                            <div class="knob-wrapper">
+                                <div class="knob effect-knob" data-effect="2">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="loop-section">
+                    <h3 class="section-title">Loop Controls</h3>
+                    <div class="loop-controls">
+                        <button class="loop-btn" data-length="0.25">1/4</button>
+                        <button class="loop-btn" data-length="0.5">1/2</button>
+                        <button class="loop-btn" data-length="1">1</button>
+                        <button class="loop-btn" data-length="2">2</button>
+                        <button class="loop-btn" data-length="4">4</button>
+                        <button class="loop-btn" data-length="8">8</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="dj-deck deck-b">
+                <div class="deck-header">
+                    <div class="deck-identity">
+                        <h2 class="deck-label">DECK B</h2>
+                        <div class="deck-indicator"></div>
+                    </div>
+                    <div class="track-info">
+                        <div class="track-title" id="trackTitleB">No Track Loaded</div>
+                        <div class="track-artist" id="trackArtistB">—</div>
+                    </div>
+                    <button class="load-btn" id="loadB">
+                        <i class="ti ti-folder-plus"></i>
+                        <span>LOAD</span>
+                    </button>
+                </div>
+
+                <div class="waveform-container">
+                    <canvas class="waveform-canvas" id="waveformB" width="400" height="80"></canvas>
+                    <div class="waveform-overlay">
+                        <div class="playhead" id="playheadB"></div>
+                        <div class="cue-markers" id="cueMarkersB"></div>
+                    </div>
+                </div>
+
+                <div class="jog-wheel-container">
+                    <div class="jog-wheel" id="jogWheelB">
+                        <div class="jog-wheel-outer">
+                            <div class="jog-wheel-inner">
+                                <div class="jog-wheel-center">
+                                    <div class="bpm-display">
+                                        <span class="bpm-value" id="bpmB">120.0</span>
+                                        <span class="bpm-label">BPM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="jog-wheel-led-ring" id="jogLedsB"></div>
+                    </div>
+                </div>
+
+                <div class="transport-controls">
+                    <button class="transport-btn cue-btn" id="cueB">
+                        <i class="ti ti-point-filled"></i>
+                        <span>CUE</span>
+                    </button>
+                    <button class="transport-btn play-btn" id="playB">
+                        <i class="ti ti-player-play"></i>
+                        <span>PLAY</span>
+                    </button>
+                    <button class="transport-btn sync-btn" id="syncB">
+                        <i class="ti ti-refresh"></i>
+                        <span>SYNC</span>
+                    </button>
+                </div>
+
+                <div class="hot-cue-section">
+                    <h3 class="section-title">Hot Cues</h3>
+                    <div class="hot-cue-grid" id="hotCuesB">
+                        <div class="hot-cue-pad" data-cue="1">
+                            <div class="pad-number">1</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="2">
+                            <div class="pad-number">2</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="3">
+                            <div class="pad-number">3</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="4">
+                            <div class="pad-number">4</div>
+                            <div class="pad-label">CUE</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="5">
+                            <div class="pad-number">5</div>
+                            <div class="pad-label">LOOP</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="6">
+                            <div class="pad-number">6</div>
+                            <div class="pad-label">LOOP</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="7">
+                            <div class="pad-number">7</div>
+                            <div class="pad-label">FX</div>
+                        </div>
+                        <div class="hot-cue-pad" data-cue="8">
+                            <div class="pad-number">8</div>
+                            <div class="pad-label">FX</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="eq-effects-section">
+                    <div class="eq-controls">
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="high" data-deck="B">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">HIGH</div>
+                        </div>
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="mid" data-deck="B">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">MID</div>
+                        </div>
+                        <div class="eq-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob eq-knob" data-eq="low" data-deck="B">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">LOW</div>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-section">
+                        <div class="filter-knob-container">
+                            <div class="knob-wrapper">
+                                <div class="knob filter-knob" data-deck="B">
+                                    <div class="knob-indicator"></div>
+                                </div>
+                                <div class="knob-value">0</div>
+                            </div>
+                            <div class="knob-label">FILTER</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="fader-section">
+                    <div class="tempo-fader-container">
+                        <div class="fader-track">
+                            <div class="fader-handle tempo-fader" id="tempoFaderB" data-deck="B">
+                                <div class="fader-grip"></div>
+                            </div>
+                        </div>
+                        <div class="fader-label">TEMPO</div>
+                        <div class="tempo-value" id="tempoValueB">0%</div>
+                    </div>
+                    
+                    <div class="volume-fader-container">
+                        <div class="fader-track">
+                            <div class="fader-handle volume-fader" id="volumeFaderB" data-deck="B">
+                                <div class="fader-grip"></div>
+                            </div>
+                        </div>
+                        <div class="fader-label">VOLUME</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="control-panel">
+            <div class="panel-section">
+                <h3 class="panel-title">Library</h3>
+                <div class="panel-controls">
+                    <button class="panel-btn" id="importAudio">
+                        <i class="ti ti-file-music"></i>
+                        <span>Import</span>
+                    </button>
+                    <button class="panel-btn" id="recordAudio">
+                        <i class="ti ti-microphone"></i>
+                        <span>Record</span>
+                    </button>
+                    <button class="panel-btn" id="browseLibrary">
+                        <i class="ti ti-folder"></i>
+                        <span>Browse</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Session</h3>
+                <div class="panel-controls">
+                    <button class="panel-btn" id="saveSession">
+                        <i class="ti ti-device-floppy"></i>
+                        <span>Save</span>
+                    </button>
+                    <button class="panel-btn" id="loadSession">
+                        <i class="ti ti-folder-open"></i>
+                        <span>Load</span>
+                    </button>
+                    <button class="panel-btn" id="exportMix">
+                        <i class="ti ti-download"></i>
+                        <span>Export</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">AI Tools</h3>
+                <div class="panel-controls">
+                    <button class="panel-btn" id="generateTrack">
+                        <i class="ti ti-sparkles"></i>
+                        <span>Generate</span>
+                    </button>
+                    <button class="panel-btn" id="analyzeTrack">
+                        <i class="ti ti-analyze"></i>
+                        <span>Analyze</span>
+                    </button>
+                    <button class="panel-btn" id="autoMix">
+                        <i class="ti ti-robot"></i>
+                        <span>Auto Mix</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-section">
+                <h3 class="panel-title">Settings</h3>
+                <div class="panel-controls">
+                    <button class="panel-btn" id="preferences">
+                        <i class="ti ti-settings"></i>
+                        <span>Preferences</span>
+                    </button>
+                    <button class="panel-btn" id="keyboardShortcuts">
+                        <i class="ti ti-keyboard"></i>
+                        <span>Shortcuts</span>
+                    </button>
+                    <button class="panel-btn" id="help">
+                        <i class="ti ti-help"></i>
+                        <span>Help</span>
+                    </button>
+                </div>
+            </div>
+        </footer>
+
+        <footer class="site-footer">
+            Made By Ed Chen
+            <a href="https://www.linkedin.com/in/ed-chen-saas/" target="_blank">Linkedin</a> |
+            <a href="https://www.edwson.com" target="_blank">Site</a>
+        </footer>
+        </div>
+
+    <input type="file" id="audioFileInput" accept="audio/*" multiple style="display: none;">
+    <input type="file" id="sessionFileInput" accept=".json" style="display: none;">
+
+    <div id="aiModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AI Assistant</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="ai-chat">
+                    <div class="chat-messages" id="chatMessages"></div>
+                    <div class="chat-input-container">
+                        <input type="text" id="chatInput" placeholder="Ask AI to generate a track, analyze music, or get mixing tips...">
+                        <button id="sendChat">
+                            <i class="ti ti-send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="libraryModal" class="modal">
+        <div class="modal-content library-modal">
+            <div class="modal-header">
+                <h2>Music Library</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="library-content">
+                    <div class="library-sidebar">
+                        <div class="library-filters">
+                            <input type="text" id="searchTracks" placeholder="Search tracks...">
+                            <div class="filter-group">
+                                <h4>Genre</h4>
+                                <div class="filter-options" id="genreFilters"></div>
+                            </div>
+                            <div class="filter-group">
+                                <h4>BPM Range</h4>
+                                <div class="bpm-range">
+                                    <input type="range" id="bpmMin" min="60" max="200" value="60">
+                                    <input type="range" id="bpmMax" min="60" max="200" value="200">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="library-main">
+                        <div class="track-list" id="trackList"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="preferencesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Preferences</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="settings-grid">
+                    <div class="settings-item">
+                        <label for="crossfaderCurve">Crossfader Curve</label>
+                        <select id="crossfaderCurve" class="settings-select">
+                            <option value="linear">Linear</option>
+                            <option value="constant-power" selected>Constant Power</option>
+                            <option value="sharp">Sharp (Cut)</option>
+                        </select>
+                        <p class="settings-description">Determines how the audio fades between decks.</p>
+                    </div>
+                    <div class="settings-item">
+                        <label for="audioLatency">Audio Latency</label>
+                        <select id="audioLatency" class="settings-select">
+                            <option value="interactive">Low (Fastest Response)</option>
+                            <option value="balanced" selected>Balanced</option>
+                            <option value="playback">High (Most Stable)</option>
+                        </select>
+                        <p class="settings-description">Lower latency for scratching, higher for stable playback. Requires app restart.</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="panel-btn" id="saveSettings">Save & Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="shortcutsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Keyboard Shortcuts</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <ul class="shortcuts-list">
+                    <li><kbd>Q</kbd><span>Set Cue Deck A</span></li>
+                    <li><kbd>W</kbd><span>Play/Pause Deck A</span></li>
+                    <li><kbd>E</kbd><span>Sync Deck A</span></li>
+                    <li><kbd>O</kbd><span>Set Cue Deck B</span></li>
+                    <li><kbd>P</kbd><span>Play/Pause Deck B</span></li>
+                    <li><kbd>[</kbd><span>Sync Deck B</span></li>
+                    <li><kbd>R</kbd><span>Toggle Recording</span></li>
+                    <li><kbd>L</kbd><span>Open Library</span></li>
+                    <li><kbd>I</kbd><span>Import Audio</span></li>
+                    <li><kbd>1</kbd>-<kbd>4</kbd><span>Hot Cues 1-4 (Deck A)</span></li>
+                    <li><kbd>7</kbd>-<kbd>0</kbd><span>Hot Cues 1-4 (Deck B)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Help & About</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Welcome to Super Nove Studio!</h3>
+                <p>This is a professional DJ controller built with the Web Audio API. Here are some tips to get started:</p>
+                <ul>
+                    <li>Use the <strong>LOAD</strong> buttons to add tracks from your library.</li>
+                    <li>Use the <strong>PLAY/PAUSE</strong> and <strong>CUE</strong> buttons to control playback.</li>
+                    <li>The <strong>SYNC</strong> button will match the BPM of the other deck.</li>
+                    <li>Explore the EQ, Filter, and Effects knobs to shape your sound.</li>
+                </ul>
+                <p><strong>Version:</strong> 1.0.0</p>
+                <p>For more assistance, contact support at <a href="mailto:edwsonsaas@gmail.com">edwsonsaas@gmail.com</a></p>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="notifications" class="notifications-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
