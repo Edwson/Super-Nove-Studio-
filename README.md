@@ -3,6 +3,9 @@
 > **A Professional Web-Based DJ Controller with AI Integration**
 
 Super Nove Studio is a sophisticated, browser-based DJ mixing platform that brings professional-grade audio processing and intuitive controls to the web. Built with cutting-edge Web Audio API technology and enhanced with AI assistance, it delivers studio-quality mixing capabilities accessible from any modern browser.
+<br>
+[Super Nove Studio 🎧](https://edwson.com/Super_Nove_Studio/)   
+<br>
 
 ## ✨ Features
 
